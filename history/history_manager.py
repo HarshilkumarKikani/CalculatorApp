@@ -4,6 +4,7 @@ import logging
 
 class HistoryManager:
     def __init__(self):
+        config = Config()
         self.history = pd.DataFrame(columns=["Operation", "Operand1", "Operand2", "Result"])
         self.filepath = "history.csv"
         self.logger = logging.getLogger(__name__)
