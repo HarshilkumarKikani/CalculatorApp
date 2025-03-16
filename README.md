@@ -1,4 +1,4 @@
-# **Advanced Calculator Application**
+![Welcome to the Advanced Calculator App](https://wallpapersok.com/images/hd/cool-calculator-with-formulas-gy7fwb9k68gum8hc.jpg)
 
 ## **Overview**
 This Advanced Calculator Application is a Python-based command-line tool designed to demonstrate professional software development practices. It emphasizes clean, maintainable code, dynamic configuration, robust exception handling, logging, and testing, while integrating advanced features like a plugin system, Pandas-based history management, and design patterns.
