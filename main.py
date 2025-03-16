@@ -5,6 +5,7 @@ from utils.logging_config import setup_logging
 from history.history_manager import HistoryManager
 from plugins import basic_operations, statistics_operations
 
+
 def main():
     # Set up logging
     setup_logging()

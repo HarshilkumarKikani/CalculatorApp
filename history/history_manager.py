@@ -5,23 +5,27 @@ from utils.config import Config
 
 class HistoryManager:
     def __init__(self):
-        config = Config()
+        config = Config()  # Declared and use config
         self.history = pd.DataFrame(columns=["Operation", "Operand1", "Operand2", "Result"])
-        self.filepath = "history.csv"
+        self.filepath = config.history_file
         self.logger = logging.getLogger(__name__)
     
     def add_to_history(self, operation, operand1, operand2, result):
         """
         Add a new record to the history.
         """
-        new_entry = {
+        new_entry = pd.DataFrame([{
             "Operation": operation,
             "Operand1": operand1,
             "Operand2": operand2,
             "Result": result,
-        }
-        self.history = self.history.append(new_entry, ignore_index=True)
-        self.logger.info("Added new record to history.")
+        }])
+
+        # Explicitly check if self.history is empty
+        if self.history.empty:
+            self.history = new_entry  # Set directly if empty
+        else:
+            self.history = pd.concat([self.history, new_entry], ignore_index=True)
     
     def display_history(self):
         """
@@ -47,7 +51,7 @@ class HistoryManager:
             self.logger.info(f"History loaded from {self.filepath}")
         else:
             self.logger.warning(f"No history file found at {self.filepath}")
-            print("No history file to load.")
+            raise FileNotFoundError(f"No file found at {self.filepath}")
     
     def clear_history(self):
         """
