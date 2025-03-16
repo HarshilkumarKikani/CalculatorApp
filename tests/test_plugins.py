@@ -1,0 +1,31 @@
+import pytest
+from plugins import basic_operations
+from history.history_manager import HistoryManager
+
+@pytest.fixture
+def history_manager():
+    return HistoryManager()
+
+def test_addition(history_manager):
+    result = basic_operations.execute("add 2 3", history_manager)
+    assert result == 5
+
+def test_subtraction(history_manager):
+    result = basic_operations.execute("subtract 10 4", history_manager)
+    assert result == 6
+
+def test_multiplication(history_manager):
+    result = basic_operations.execute("multiply 3 7", history_manager)
+    assert result == 21
+
+def test_division(history_manager):
+    result = basic_operations.execute("divide 8 2", history_manager)
+    assert result == 4
+
+def test_division_by_zero(history_manager):
+    with pytest.raises(ZeroDivisionError):
+        basic_operations.execute("divide 5 0", history_manager)
+
+def test_invalid_command(history_manager):
+    with pytest.raises(ValueError):
+        basic_operations.execute("add 2", history_manager)
