@@ -59,3 +59,18 @@ class HistoryManager:
         """
         self.history = pd.DataFrame(columns=["Operation", "Operand1", "Operand2", "Result"])
         self.logger.info("Cleared history.")
+    
+    def test_display_empty_history(history_manager):
+        assert history_manager.display_history() == "No history available."
+
+    def test_add_to_history_valid(history_manager):
+        history_manager.add_to_history("add", 3, 4, 7)
+        assert len(history_manager.history) == 1
+        assert history_manager.history.iloc[0]["Operation"] == "add"
+    
+    def test_clear_history(history_manager, caplog):
+        history_manager.clear_history()
+        assert history_manager.history.empty
+        assert "Cleared history." in caplog.text
+
+

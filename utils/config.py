@@ -5,17 +5,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config:
-    """
-    Configuration class to manage environment variables.
-    """
-    @property
-    def history_file(self):
-        return os.getenv("HISTORY_FILE", "history.csv")
-
-    @property
-    def log_level(self):
-        return os.getenv("LOG_LEVEL", "INFO")
-
-    @property
-    def log_file(self):
-        return os.getenv("LOG_FILE", None)
+    def __init__(self):
+        history_file = os.getenv("HISTORY_FILE")
+        self.history_file = history_file if history_file and history_file.strip() else "history.csv"

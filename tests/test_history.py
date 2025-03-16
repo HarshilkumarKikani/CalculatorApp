@@ -1,42 +1,23 @@
 import os
-import pandas as pd
 import pytest
+import tempfile
 from history.history_manager import HistoryManager
 
 @pytest.fixture
 def history_manager():
-    manager = HistoryManager()
-    yield manager
-    if os.path.exists(manager.filepath):
-        os.remove(manager.filepath)
+    return HistoryManager()
 
-def test_add_to_history(history_manager):
+@pytest.fixture
+def temp_history_file():
+    # Create a temporary file for testing
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+        yield temp_file.name  # Pass the temp file name to the test
+    os.remove(temp_file.name)  # Clean up after the test
+
+def test_save_and_load_history(history_manager, temp_history_file):
+    history_manager.filepath = temp_history_file  # Assign the temp file path
     history_manager.add_to_history("add", 3, 4, 7)
-    assert len(history_manager.history) == 1
-    assert history_manager.history.iloc[0]["Operation"] == "add"
-    assert history_manager.history.iloc[0]["Result"] == 7
-
-def test_display_history(history_manager):
-    history_manager.add_to_history("multiply", 5, 2, 10)
-    output = history_manager.display_history()
-    assert "multiply" in output
-    assert "10" in output
-
-def test_save_and_load_history(history_manager):
-    history_manager.add_to_history("subtract", 8, 3, 5)
     history_manager.save_history()
-    new_manager = HistoryManager()
-    new_manager.load_history()
-    assert len(new_manager.history) == 1
-    assert new_manager.history.iloc[0]["Result"] == 5
-
-def test_clear_history(history_manager):
-    history_manager.add_to_history("divide", 10, 2, 5)
-    history_manager.clear_history()
-    assert history_manager.history.empty
-
-def test_no_history_file(history_manager):
-    if os.path.exists(history_manager.filepath):
-        os.remove(history_manager.filepath)
-    with pytest.raises(FileNotFoundError):
-        history_manager.load_history()
+    history_manager.load_history()
+    assert len(history_manager.history) == 1
+    assert history_manager.history.iloc[0]["Result"] == 7

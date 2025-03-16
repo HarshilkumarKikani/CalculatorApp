@@ -1,6 +1,8 @@
 import pytest
 from plugins import basic_operations
 from history.history_manager import HistoryManager
+from plugins.statistics_operations import execute
+from statistics import StatisticsError
 
 @pytest.fixture
 def history_manager():
@@ -29,3 +31,25 @@ def test_divide_by_zero(history_manager):
 def test_invalid_command(history_manager):
     with pytest.raises(ValueError):
         basic_operations.execute("invalid 2 3", history_manager)
+
+def test_mean_operation(history_manager):
+    result = execute("mean 1 2 3", history_manager)
+    assert result == 2
+
+def test_median_operation(history_manager):
+    result = execute("median 1 2 3", history_manager)
+    assert result == 2
+
+def test_mode_operation(history_manager):
+    result = execute("mode 2 2 3", history_manager)
+    assert result == 2
+
+def test_invalid_statistics_command(history_manager):
+    with pytest.raises(ValueError):
+        execute("invalid 1 2 3", history_manager)
+
+def test_mode_statistics_error(history_manager):
+    with pytest.raises(StatisticsError):
+        execute("mode 1 1 2 2", history_manager)
+
+
