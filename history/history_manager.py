@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import logging
+from utils.config import Config
 
 class HistoryManager:
     def __init__(self):
