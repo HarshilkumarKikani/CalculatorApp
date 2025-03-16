@@ -3,7 +3,7 @@ import sys
 import logging
 from utils.logging_config import setup_logging
 from history.history_manager import HistoryManager
-from plugins import basic_operations
+from plugins import basic_operations, statistics_operations
 
 def main():
     # Set up logging
@@ -23,11 +23,14 @@ def main():
                 logger.info("Application exited")
                 break
             elif command == "menu":
-                print("Available commands: add, subtract, multiply, divide, history, clear, save, load, exit")
+                print("Available commands: add, subtract, multiply, divide, mean, median, mode, history, clear, save, load, exit")
             elif command.startswith("add") or command.startswith("subtract") or \
                  command.startswith("multiply") or command.startswith("divide"):
                 # Delegate to plugin for basic operations
                 result = basic_operations.execute(command, history_manager)
+                print(f"Result: {result}")
+            elif command.startswith("mean") or command.startswith("median") or command.startswith("mode"):
+                result = statistics_operations.execute(command, history_manager)
                 print(f"Result: {result}")
             elif command == "history":
                 print(history_manager.display_history())
