@@ -5,6 +5,11 @@
 ## **Overview**
 This Advanced Calculator Application is a Python-based command-line tool designed to demonstrate professional software development practices. It emphasizes clean, maintainable code, dynamic configuration, robust exception handling, logging, and testing, while integrating advanced features like a plugin system, Pandas-based history management, and design patterns.
 
+## Demonstration Videos
+
+- [**Video 1: CalculatorApp Demo**](https://screenrec.com/share/6S0LXhb5pv)
+- [**Video 2: PyTest Coverage**](https://screenrec.com/share/fryN3WZRPG)
+
 ---
 
 ## **Key Features**
